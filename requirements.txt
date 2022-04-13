@@ -7,3 +7,4 @@ spacy
 flask
 requests
 bs4
+pyttsx3

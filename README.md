@@ -1,6 +1,6 @@
 # Image Captioning including Attention
 
-to be updated later...
+The product is designed for the blind people, who cannot see the pictures but can listen to the description. We are aiming to enable blind people to access more information and experience the beauty of the world. Our product can predict the captioning of a image and display in the frontend. User can upload a image and play the audio of the captioning of the image, so that the blind can "hear" the image.
 
 ## Dataset
 

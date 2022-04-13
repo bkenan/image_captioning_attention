@@ -1,12 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from get_images import get_images, get_path, get_directory
-from get_prediction import get_prediction
+from get_prediction import get_prediction, transform_image, get_caps_from_upload
 from generate_html import generate_html
 from model import EncoderDecoder
 import json
 import torch
 from get_loader import dataset, data_loader
+from read import read_text
 app = Flask(__name__)
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'bmp'])
+text = ""
+img_base64 = None
 
 # mapping
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -37,11 +41,48 @@ def get_image_class(dir):
     # generate html file to render once we predict the classes
     generate_html(images_with_tags)
 
-@app.route('/')
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+def request_operations(request):
+    f = request.files['file']
+    if not (f and allowed_file(f.filename)):
+        return jsonify({"error": 1001, "msg": "Only png、PNG、jpg、JPG、bmp"})
+    cap, img_base64 = get_caps_from_upload(f, final_model)
+    text = cap[0].upper() + cap[1:]
+    return text, img_base64
+
+@app.route('/', methods=['POST', 'GET'])
+def upload():
+    global text
+    global img_base64
+    if request.method == 'POST':
+        text, img_base64 = request_operations(request)
+        return render_template('preview_ok.html', text=text, uri=img_base64)
+    return render_template('preview.html')
+
+
+@app.route('/show', methods=['POST', 'GET'])
+def show():
+    global text
+    global img_base64
+    if request.method == 'POST':
+        text, img_base64 = request_operations(request)
+    return render_template('preview_ok.html', text=text, uri=img_base64)
+
+
+@app.route('/read/<text>/', methods=['GET', 'POST'])
+def read(text):
+    read_text(text)
+    return redirect(url_for('show', text=text, is_upload=True, uri=None))
+
+
+@app.route('/url')
 def home():
     return render_template('home.html')
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/url', methods=['POST', 'GET'])
 def get_data():
     if request.method == 'POST':
         user = request.form['search']

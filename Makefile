@@ -3,10 +3,10 @@ install:
 		pip install -r requirements.txt
 
 test:
-	#python -m pytest -vv test_application.py
+	#python -m pytest -vv app.py
 
 lint:
-	pylint --disable=R,C application.py
+	pylint --disable=R,C app.py
 
 deploy:
 	echo "Deploying app"

@@ -1,5 +1,4 @@
 import os
-import numpy as np
 import pandas as pd
 from collections import Counter
 import spacy
@@ -11,7 +10,7 @@ from torch.utils.data import DataLoader,Dataset
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-caption_file = './flickr8k/captions.txt'
+caption_file = './captions/captions.txt'
 df = pd.read_csv(caption_file)
 
 spacy_eng = spacy.load('en_core_web_sm')
@@ -126,8 +125,8 @@ transforms = T.Compose([
 
 #testing the dataset class
 dataset =  FlickrDataset(
-    root_dir = "./flickr8k/Images",
-    captions_file = "./flickr8k/captions.txt",
+    root_dir = "./captions/Images",
+    captions_file = "./captions/captions.txt",
     transform=transforms
 )
 

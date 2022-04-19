@@ -1,7 +1,14 @@
+
 FROM python:3.8.8-slim-buster
 
 # Working Directory
 WORKDIR /app
+
+## download model.pt 
+RUN mkdir -p /app/models
+
+ADD  https://storage.googleapis.com/artifacts.image-347015.appspot.com/model.pt /app/models
+
 
 # Copy source code to working directory
 COPY . .
@@ -17,4 +24,4 @@ EXPOSE 8080
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "flask_app.py" ]
+CMD [ "app.py" ]

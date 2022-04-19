@@ -8,3 +8,6 @@ flask
 requests
 bs4
 pyttsx3
+google-cloud-texttospeech
+gTTS
+locust

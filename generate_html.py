@@ -1,5 +1,3 @@
-import glob
-
 html_string_start = """
 <html>
 <head>

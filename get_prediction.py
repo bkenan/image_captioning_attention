@@ -1,10 +1,9 @@
 import torch
 import torchvision.transforms as transforms
-import json
 import io
 import glob
 from PIL import Image
-from get_loader import dataset, data_loader
+from get_loader import dataset
 from base64 import b64encode
 
 def transform_image(image_bytes):

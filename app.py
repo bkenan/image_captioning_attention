@@ -1,16 +1,26 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from get_images import get_images, get_path, get_directory
-from get_prediction import get_prediction, transform_image, get_caps_from_upload
+from get_prediction import get_prediction, get_caps_from_upload
 from generate_html import generate_html
 from model import EncoderDecoder
-import json
 import torch
-from get_loader import dataset, data_loader
-from read import read_text
+from base64 import b64encode
+from get_loader import dataset
+from gtts import gTTS
+
+
+
 app = Flask(__name__)
+
+def textTospeech(text):
+    audio = gTTS(text)
+    audio_res = b""
+    for i in audio.stream():
+        audio_res = audio_res + i
+    return("data:audio/mpeg;base64," + b64encode(audio_res).decode('utf-8'))
+
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'JPG', 'PNG', 'bmp'])
-text = ""
-img_base64 = None
 
 # mapping
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -40,7 +50,8 @@ def get_image_class(dir):
     images_with_tags = get_prediction(final_model, path)
     # generate html file to render once we predict the classes
     generate_html(images_with_tags)
-
+    
+    
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
@@ -51,15 +62,19 @@ def request_operations(request):
         return jsonify({"error": 1001, "msg": "Only png、PNG、jpg、JPG、bmp"})
     cap, img_base64 = get_caps_from_upload(f, final_model)
     text = cap[0].upper() + cap[1:]
-    return text, img_base64
+    # audio = text2speech(text)
+    audio_base64 = textTospeech(text)
+    # audio_base64 = "data:audio/mpeg;base64," + b64encode(audio).decode('utf-8')
+    return text, img_base64, audio_base64
+
 
 @app.route('/', methods=['POST', 'GET'])
 def upload():
     global text
     global img_base64
     if request.method == 'POST':
-        text, img_base64 = request_operations(request)
-        return render_template('preview_ok.html', text=text, uri=img_base64)
+        text, img_base64, audio_base64 = request_operations(request)
+        return render_template('preview_ok.html', text=text, uri=img_base64, audio=audio_base64)
     return render_template('preview.html')
 
 
@@ -68,14 +83,8 @@ def show():
     global text
     global img_base64
     if request.method == 'POST':
-        text, img_base64 = request_operations(request)
-    return render_template('preview_ok.html', text=text, uri=img_base64)
-
-
-@app.route('/read/<text>/', methods=['GET', 'POST'])
-def read(text):
-    read_text(text)
-    return redirect(url_for('show', text=text, is_upload=True, uri=None))
+        text, img_base64, audio_base64 = request_operations(request)
+    return render_template('preview_ok.html', text=text, uri=img_base64, audio=audio_base64)
 
 
 @app.route('/url')

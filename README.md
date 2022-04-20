@@ -8,7 +8,8 @@ The home page:
 
 When you upload an image:
 
-![test](https://user-images.githubusercontent.com/53462948/164121535-42933caa-b7cf-4c38-b8bd-832a5a6f2af8.jpg)
+![test](https://user-images.githubusercontent.com/53462948/164121624-ce98a61a-39ab-4956-bdc0-962e9c80b62a.png)
+
 
 
 

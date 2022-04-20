@@ -1,6 +1,6 @@
 # Image Captioning including Attention
 
-The product is designed for the disabled people, who cannot see the pictures but can listen to the description. We are aiming to enable disabled people to access more information and experience the beauty of the world. Our product can predict the captioning of an image and display to users. A user can upload an image and play the audio of the captioning of the image, so that they can "hear" the image.
+The product is designed for  disabled people, who cannot see the pictures but can listen to the description. We are aiming to enable disabled people to access more information and experience the beauty of the world. Our product can predict the captioning of an image and display to users. A user can upload an image and play the audio of the captioning of the image, so that they can "hear" the image.
 
 ## Modeling
 

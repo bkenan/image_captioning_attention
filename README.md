@@ -2,10 +2,15 @@
 
 The product is designed for the blind people, who cannot see the pictures but can listen to the description. We are aiming to enable blind people to access more information and experience the beauty of the world. Our product can predict the captioning of a image and display in the frontend. User can upload a image and play the audio of the captioning of the image, so that the blind can "hear" the image.
 
-The default frontend looks like
+The home page:
+
 ![image](https://user-images.githubusercontent.com/97444802/163241489-7ab169b6-2865-4668-be47-a5827a145a47.png)
-When you upload a image, it shows like 
-![image](https://user-images.githubusercontent.com/97444802/163241619-63c6b4dd-8755-4f1a-83db-29dfb064da6d.png)
+
+When you upload an image:
+
+![test](https://user-images.githubusercontent.com/53462948/164121535-42933caa-b7cf-4c38-b8bd-832a5a6f2af8.jpg)
+
+
 
 
 ## Dataset

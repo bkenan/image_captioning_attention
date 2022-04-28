@@ -36,14 +36,14 @@ https://user-images.githubusercontent.com/53462948/164121915-549d5cc5-b2de-49f6-
 
 1. Clone this repo
 2. Download [my trained model](https://drive.google.com/file/d/1t3QbSauxSnZhXE1DbuGwiT2AokOsqOjA/view?usp=sharing) and put it in a new "models" folder within the repo directory
-4. make install
-5. Open Python Shell and run:
+3. make install
+4. Open Python Shell and run:
     
     import spacy
     
     from spacy.cli.download import download
     download(model="en_core_web_sm")
-6. Run app.py
+5. Run app.py
 
 
 ## Testing the model in Colab:
